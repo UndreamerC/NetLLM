@@ -111,7 +111,9 @@ We offer the model checkpoint of the finetuned Llama2-7b here: https://drive.goo
 ```sh
 python run_plm.py --test --plm-type llama --plm-size base --rank 128 --device cuda:0 --model-dir  data/ft_plms/try_llama2_7b
 ```
-
+```sh
+python run_plm.py --test --plm-type llama --plm-size base --rank 128 --device mps --model-dir  data/ft_plms/try_llama2_7b
+```
 ## Run baselines
 
 To run baselines, please run:
