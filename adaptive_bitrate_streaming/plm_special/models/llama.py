@@ -192,6 +192,11 @@ class LlamaModel(LlamaPreTrainedModel):
                 all_hidden_states += (hidden_states,)
 
             past_key_value = past_key_values[idx] if past_key_values is not None else None
+            if hasattr(self, "rotary_emb"):
+                cos, sin = self.rotary_emb(hidden_states, seq_len=seq_length_with_past)
+                position_embeddings = (cos, sin)
+            else:
+                position_embeddings = None
 
             if self.gradient_checkpointing and self.training:
 
@@ -214,6 +219,7 @@ class LlamaModel(LlamaPreTrainedModel):
                     output_attentions=output_attentions,
                     use_cache=use_cache,
                     padding_mask=padding_mask,
+                     position_embeddings=position_embeddings,
                 )
 
             hidden_states = layer_outputs[0]
